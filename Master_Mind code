@@ -1,0 +1,160 @@
+using System;
+using System.Threading;
+
+
+namespace Mastermind
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine("\t\t\t\t\t\tMaster mind");
+            Thread.Sleep(3000);
+            bool permit = true, Quit;
+            Random rnd = new Random();
+            int j, l, c = 0, True_Number, Exact_Number,x = 0;
+            Console.WriteLine("In which mode do you want to play?[E : easy,M : medium,H : Hard]");
+            switch (Console.ReadKey().Key)
+            {
+                case ConsoleKey.E :
+                    x = 4;
+                    break;
+                case ConsoleKey.M:
+                    x = 6;
+                    break;
+                case ConsoleKey.H:
+                    x = 8;
+                    break;
+                default :
+                    Console.WriteLine("Because you did not select a mode, the default mode (Easy mode) is selected");
+                    x = 4;
+                    break;
+            }
+            int[] nums = new int[x];
+            int[] nums2 = new int[x];
+            Thread.Sleep(5000);
+            Console.Clear();
+            Console.WriteLine("now let me to set the numbers");
+
+            do
+            {
+                for (j = 0; j < x; j++)
+                {
+                    nums[j] = rnd.Next(1, x + 1);
+                }
+                Thread.Sleep(2000);
+                Console.Clear();
+                Console.WriteLine("now numbers set Guess the numbers");
+                Thread.Sleep(2000);
+                Console.Clear();
+                do
+                {
+
+                    Console.Clear();
+                    for (j = 0; j < x; j++)
+                    {
+
+                        Console.WriteLine($"give me number House{j + 1} " +
+                                          $"(This number must be less than {x} or Equal to {x} )");
+                        nums2[j] = Convert.ToInt32(Console.ReadLine());
+                        Console.Clear();
+                    }
+
+                    Exact_Number = 0;
+                    True_Number = 0;
+                    ;
+                    for (l = 0; l < x; l++)
+                    {
+
+                        for (j = 0; j < x && l == 0; j++)
+                        {
+                            if (nums[j] == nums2[j])
+                            {
+                                Exact_Number++;
+                            }
+                        }
+
+                        for (j = 0; j < x; j++)
+                        {
+
+                            if (l == j)
+                            {
+                                continue;
+                            }
+
+                            else if (nums[l] == nums2[j] && l != j)
+                            {
+                                True_Number++;
+                                break;
+                            }
+                        }
+                    }
+                    True_Number -= Exact_Number;
+                    Console.WriteLine("inputs number :");
+                    foreach (var val in nums2)
+                    {
+                        Console.WriteLine(val);
+                    }
+                    Console.WriteLine("Exact numbers :{0} \tTrue numbers:{1}", Exact_Number, True_Number);
+                    if (Exact_Number == x)
+                    {
+                        break;
+                    }
+
+                    c++;
+                    Thread.Sleep(7000);
+                } while (permit && c < 10);
+
+                if (c >= 10)
+                {
+                    Console.Clear();
+                    Console.WriteLine("I'm sorry but the number of your " +
+                                      "guesses reached more than 10 times" +
+                                      " and you lost");
+                    Console.Clear();
+                    Console.WriteLine("real numbers :");
+                    foreach (var val in nums)
+                    {
+                        Console.WriteLine(val);
+                    }
+                    Console.WriteLine("------------");
+                    Console.WriteLine("your numbers");
+                    foreach (var val in nums2)
+                    {
+                        Console.WriteLine(val);
+                    }
+
+                }
+
+                if (c < 10)
+                {
+                    Console.Clear();
+                    Console.WriteLine("real numbers :");
+                    foreach (var val in nums)
+                    {
+                        Console.WriteLine(val);
+                    }
+                    Console.WriteLine("------------");
+                    Console.WriteLine("your numbers");
+                    foreach (var val in nums2)
+                    {
+                        Console.WriteLine(val);
+                    }
+                    Console.WriteLine("Hooray you won");
+                }
+
+                Thread.Sleep(5000);
+                Console.Clear();
+                Console.WriteLine("ok now do you want to continue [N/Y]");
+                Quit = Console.ReadKey().Key == ConsoleKey.N ? false : true;
+
+
+            } while (Quit);
+            Console.Clear();
+            Console.WriteLine("ok, Bye");
+            Console.ReadKey();
+
+        }
+    }
+}
