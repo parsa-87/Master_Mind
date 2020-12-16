@@ -12,6 +12,7 @@ namespace Mastermind
             Console.WriteLine("\t\t\t\t\t\tMaster mind");
             Thread.Sleep(3000);
             bool permit = true, Quit;
+            string f = "";
             Random rnd = new Random();
             int j, l, c = 0, True_Number, Exact_Number,x = 0;
             Console.WriteLine("In which mode do you want to play?[E : easy,M : medium,H : Hard]");
@@ -29,11 +30,14 @@ namespace Mastermind
                 default :
                     Console.WriteLine("Because you did not select a mode, the default mode (Easy mode) is selected");
                     x = 4;
+                    Thread.Sleep(5000);
                     break;
+                    
             }
+            Console.ReadKey();
             int[] nums = new int[x];
             int[] nums2 = new int[x];
-            Thread.Sleep(5000);
+            Thread.Sleep(1000);
             Console.Clear();
             Console.WriteLine("now let me to set the numbers");
 
@@ -43,7 +47,7 @@ namespace Mastermind
                 {
                     nums[j] = rnd.Next(1, x + 1);
                 }
-                Thread.Sleep(2000);
+                Thread.Sleep(3000);
                 Console.Clear();
                 Console.WriteLine("now numbers set Guess the numbers");
                 Thread.Sleep(2000);
@@ -54,10 +58,25 @@ namespace Mastermind
                     Console.Clear();
                     for (j = 0; j < x; j++)
                     {
-
                         Console.WriteLine($"give me number House{j + 1} " +
                                           $"(This number must be less than {x} or Equal to {x} )");
-                        nums2[j] = Convert.ToInt32(Console.ReadLine());
+                        f = Console.ReadLine();
+                        do 
+                        {
+                            permit = true;
+                            if (f == "")
+                            {
+                                permit = false;
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("\nYou did not enter any numbers. Try again ");
+                                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                                f = Console.ReadLine();
+                                Thread.Sleep(500);
+                                Console.Clear();
+                            }
+
+                        } while (!permit);
+                        nums2[j] = Convert.ToInt32(f);
                         Console.Clear();
                     }
 
